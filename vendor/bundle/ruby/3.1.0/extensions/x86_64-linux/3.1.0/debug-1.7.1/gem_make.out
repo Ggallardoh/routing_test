@@ -1,0 +1,16 @@
+current directory: /home/ggallardo/routing-test/vendor/bundle/ruby/3.1.0/gems/debug-1.7.1/ext/debug
+/home/ggallardo/.rvm/rubies/ruby-3.1.2/bin/ruby -I /home/ggallardo/.rvm/rubies/ruby-3.1.2/lib/ruby/3.1.0 -r ./siteconf20230203-24735-8g6ycc.rb extconf.rb
+creating Makefile
+
+current directory: /home/ggallardo/routing-test/vendor/bundle/ruby/3.1.0/gems/debug-1.7.1/ext/debug
+make DESTDIR\= clean
+
+current directory: /home/ggallardo/routing-test/vendor/bundle/ruby/3.1.0/gems/debug-1.7.1/ext/debug
+make DESTDIR\=
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/ggallardo/routing-test/vendor/bundle/ruby/3.1.0/gems/debug-1.7.1/ext/debug
+make DESTDIR\= install
+/usr/bin/install -m 0755 debug.so ./.gem.20230203-24735-s3sytt/debug
