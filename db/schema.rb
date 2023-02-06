@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_06_161826) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_06_162710) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,10 +34,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_161826) do
     t.integer "total_stops"
     t.string "action"
     t.bigint "organization_id", null: false
-    t.bigint "driver_id", null: false
-    t.bigint "vehicle_id", null: false
+    t.bigint "driver_id"
+    t.bigint "vehicle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aasm_state"
     t.index ["driver_id"], name: "index_routes_on_driver_id"
     t.index ["organization_id"], name: "index_routes_on_organization_id"
     t.index ["vehicle_id"], name: "index_routes_on_vehicle_id"
