@@ -1,4 +1,6 @@
 class Route < ApplicationRecord
+  include AASM
+
   belongs_to :organization
   belongs_to :driver, optional: true
   belongs_to :vehicle, optional: true
@@ -15,10 +17,6 @@ class Route < ApplicationRecord
     event :schedule do
       transitions from: :unscheduled, to: :scheduled,
                   guard: :no_overlapping_routes?
-      success do |driver, vehicle|
-        self.driver = driver
-        self.vehicle = vehicle
-      end
     end
     event :unschedule do
       transitions from: :scheduled, to: :unscheduled
@@ -32,9 +30,12 @@ class Route < ApplicationRecord
   private
 
   def overlapping_routes?
-    routes = Route.where.not(id:).with_driver(driver).with_vehicle(vehicle)
+    routes = []
+    routes << Route.scheduled.where.not(id:).with_driver(driver) if driver.present?
+    routes << Route.scheduled.where.not(id:).with_vehicle(vehicle) if vehicle.present?
+    period = Range.new starts_at, ends_at
+
     routes.none? do |route|
-      period = Range.new starts_at, ends_at
       route_period = Range.new route.starts_at, route.ends_at
       period.overlaps?(route_period)
     end
