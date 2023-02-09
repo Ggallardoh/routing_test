@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_06_162710) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_09_175937) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_162710) do
     t.string "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "organization_id", null: false
+    t.index ["organization_id"], name: "index_drivers_on_organization_id"
   end
 
   create_table "organizations", force: :cascade do |t|
@@ -35,13 +37,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_162710) do
     t.string "action"
     t.bigint "organization_id", null: false
     t.bigint "driver_id"
-    t.bigint "vehicle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "aasm_state"
+    t.jsonb "coordinates"
     t.index ["driver_id"], name: "index_routes_on_driver_id"
     t.index ["organization_id"], name: "index_routes_on_organization_id"
-    t.index ["vehicle_id"], name: "index_routes_on_vehicle_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -56,15 +57,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_06_162710) do
 
   create_table "vehicles", force: :cascade do |t|
     t.string "plate"
-    t.bigint "organization_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["organization_id"], name: "index_vehicles_on_organization_id"
+    t.bigint "driver_id", null: false
+    t.index ["driver_id"], name: "index_vehicles_on_driver_id"
   end
 
+  add_foreign_key "drivers", "organizations"
   add_foreign_key "routes", "drivers"
   add_foreign_key "routes", "organizations"
-  add_foreign_key "routes", "vehicles"
   add_foreign_key "users", "organizations"
-  add_foreign_key "vehicles", "organizations"
+  add_foreign_key "vehicles", "drivers"
 end
