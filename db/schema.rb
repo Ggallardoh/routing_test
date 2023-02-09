@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_175937) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_09_183236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -41,6 +41,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_175937) do
     t.datetime "updated_at", null: false
     t.string "aasm_state"
     t.jsonb "coordinates"
+    t.string "name"
     t.index ["driver_id"], name: "index_routes_on_driver_id"
     t.index ["organization_id"], name: "index_routes_on_organization_id"
   end
