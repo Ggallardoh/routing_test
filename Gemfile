@@ -48,6 +48,9 @@ gem "bootsnap", require: false
 # AASM
 gem 'aasm'
 
+# Devise gem for authentication
+gem 'devise'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

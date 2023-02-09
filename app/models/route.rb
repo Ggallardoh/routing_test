@@ -3,6 +3,7 @@ class Route < ApplicationRecord
 
   belongs_to :organization
   belongs_to :driver, optional: true
+  belongs_to :vehicle, optional: true
 
   validates :starts_at, :ends_at, :travel_time, :total_stops, :action, presence: true
 
@@ -28,6 +29,10 @@ class Route < ApplicationRecord
 
   def time
     "#{starts_at.to_formatted_s(:time)} - #{ends_at.to_formatted_s(:time)}"
+  end
+
+  def assignation
+    driver.nil? ? 'Sin Asignar' : "#{driver.name}/#{vehicle.plate}"
   end
 
   private
