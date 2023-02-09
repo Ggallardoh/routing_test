@@ -1,0 +1,31 @@
+<div class="map-container">
+  <div
+    id="routes"
+    data-latitude=<%= -33.4691199 %>
+    data-longitude=<%= -70.64827 %>
+  >
+    <h2>Rutas</h2>
+    <ol>
+      <% @routes.each do |route| %>
+        <div class = "route-list" data-name=<%= route.name %> >
+           <% route.coordinates.each do |coord| %>
+              <div
+                  class = "route-list-item"
+                  data-latitude=<%= coord['lat'] %>
+                  data-longitude=<%= coord['lng'] %> >
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </ol>
+
+  </div>
+  <div id="map" style="width: 100%;height: 450px; position:relative">
+    <div id="map-canvas"></div>
+  </div>
+</div>
+<%= javascript_include_tag 'map' %>
+<%=
+    javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{ENV['GOOGLE_MAPS_API_KEY']}&callback=initMap",
+    defer: true
+%>

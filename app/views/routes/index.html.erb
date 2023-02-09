@@ -1,0 +1,37 @@
+<%# app/views/routes/index.html.erb %>
+
+<main class="container">
+  <div class="header">
+    <h1>Rutas</h1>
+  </div>
+
+  <div class="row">
+    <div class="col col-lg-7 col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Nombre </th>
+            <th scope="col">Hora </th>
+            <th scope="col">Tiempo</th>
+            <th scope="col"><i class="bi bi-geo-alt-fill"></i></th>
+            <th scope="col">Acción</th>
+            <th scope="col">Asignación</th>
+          </tr>
+        </thead>
+        <% @routes.each do |route| %>
+          <tr>
+            <td><%='Ruta 1'%></td>
+            <td><%=route.time%></td>
+            <td><%=route.travel_time%></td>
+            <td><%=route.total_stops%></td>
+            <td><%=route.action%></td>
+            <td><%=route.driver.name%></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+    <div class="col col-lg-5 col-md-12">
+      <%= render :partial => 'routes/map' %>
+    </div>
+  </div>
+</main>
