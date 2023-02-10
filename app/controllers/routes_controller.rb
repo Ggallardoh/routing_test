@@ -9,11 +9,10 @@ class RoutesController < ApplicationController
     if @route.may_schedule?(@driver, @vehicle)
       @route.schedule!(@driver, @vehicle)
       flash[:notice] = 'Ruta agendada'
-      redirect_to root_path
     else
       flash[:alert] = @route.overlapping_routes_message(@driver, @vehicle)
-      redirect_to root_path, overlap: @route.overlapping_route
     end
+    redirect_to root_path
   end
 
   private
