@@ -50,6 +50,7 @@ gem 'aasm'
 
 # Devise gem for authentication
 gem 'devise'
+gem "twitter-bootstrap-rails"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
