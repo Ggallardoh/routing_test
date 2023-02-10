@@ -1,12 +1,17 @@
 <%# app/views/routes/index.html.erb %>
 
 <main class="container">
+
+  <div id ="flash">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: 'alert alert-info' %>
+    <% end %>
+  </div>
   <div class="header">
     <h1>Rutas</h1>
   </div>
-
   <div class="row">
-    <div class="col col-lg-7 col-md-12">
+    <div class="col col-lg-8 col-md-12">
       <table class="table">
         <thead>
           <tr>
@@ -16,21 +21,30 @@
             <th scope="col"><i class="bi bi-geo-alt-fill"></i></th>
             <th scope="col">Acción</th>
             <th scope="col">Asignación</th>
+            <th scope="col">Conductores</th>
+            <th scope="col">Vehiculos</th>
+            <th scope="col">Asignar</th>
           </tr>
         </thead>
         <% @routes.each do |route| %>
-          <tr>
-            <td><%='Ruta 1'%></td>
+        <%= form_tag(route_assign_path(route), :method => "put") do |form| %>
+          <tr id = <%=route.id%>>
+            <td><%=route.name%></td>
             <td><%=route.time%></td>
             <td><%=route.travel_time%></td>
             <td><%=route.total_stops%></td>
             <td><%=route.action%></td>
-            <td><%=route.driver.name%></td>
+            <td><%=route.assignation%></td>
+            <td><%= select_tag('driver', options_from_collection_for_select(@drivers, 'id', 'name'), prompt: "Conductores...", :selected => params[:driver]) unless route.scheduled?  %></td>
+            <td><%= select_tag('vehicle', options_from_collection_for_select(@vehicles, 'id', 'plate'), prompt: "Vehiculos...", :selected => params[:vehicle]) unless route.scheduled?  %></td>
+            <td><%= submit_tag "Asignar" unless route.scheduled? %></td>
+            </td>
           </tr>
+          <% end %>
         <% end %>
       </table>
     </div>
-    <div class="col col-lg-5 col-md-12">
+    <div class="col col-lg-4 col-md-12">
       <%= render :partial => 'routes/map' %>
     </div>
   </div>
