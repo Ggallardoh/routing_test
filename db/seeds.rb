@@ -18,7 +18,7 @@ org2 = Organization.create! name: 'Pricing'
 User.create! email: 'routing@fakemail.com', password: '123456', organization: org1
 User.create! email: 'pricing@fakemail.com', password: '123456', organization: org2
 
-Driver.create! name: 'Carlos,', last_name: 'Carlos,', organization: org1
+Driver.create! name: 'Carlos', last_name: 'Carlos', organization: org1
 Driver.create! name: 'Adán', last_name: 'Adán', organization: org1
 driver1 = Driver.create! name: 'Diego', last_name: 'Diego', organization: org1
 Driver.create! name: 'Andrea', last_name: 'Andrea', organization: org2
@@ -40,10 +40,10 @@ coords1 = [{ lat: '-33.440953', lng: '-70.624276' },
 coords2 = [{ lat: '-33.436205', lng: '-70.596780' },
            { lat: '-33.454634', lng: '-70.580236' },
            { lat: '-33.459205', lng: '-70.587848' }]
-coords3 = [{ lat: '-33.461816', lng: '-70.615003' },
-           { lat: '-33.462291', lng: '-70.606424' },
-           { lat: '-33.470190', lng: '-70.606562' },
-           { lat: '-33.470532', lng: '-70.613683' }]
+coords3 = [{ lat: '-33.465726', lng: '-70.585664' },
+           { lat: '-33.469173', lng: '-70.576394' },
+           { lat: '-33.486185', lng: '-70.558192' },
+           { lat: '-33.473633', lng: '-70.598747' }]
 
 Route.create! name: 'Ruta_1',
               starts_at: '2023-02-08 09:00:00',
@@ -67,8 +67,9 @@ Route.create! name: 'Ruta_3',
               starts_at: '2023-02-08 11:00:00',
               ends_at: '2023-02-08 13:30:00',
               travel_time: 2,
-              total_stops: 3,
+              total_stops: 4,
               action: 'Llegada',
+              aasm_state: 'scheduled',
               organization: org1,
               coordinates: coords3,
               driver: driver1,
