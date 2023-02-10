@@ -29,11 +29,11 @@ class RoutesController < ApplicationController
 
   def set_driver
     @driver = Driver.find_by_id(params[:driver])
-    flash[:alert] = 'Debe asignar conductor' && (redirect_to root_path) if @driver.nil?
+    redirect_to(root_path, flash: { error: 'Debe asignar conductor' }) if @driver.nil?
   end
 
   def set_vehicle
     @vehicle = Vehicle.find_by_id(params[:vehicle])
-    flash[:alert] = 'Debe asignar vehiculo' && (redirect_to root_path) if @vehicle.nil?
+    redirect_to(root_path, flash: { error: 'Debe asignar vehiculo' }) if @vehicle.nil?
   end
 end
