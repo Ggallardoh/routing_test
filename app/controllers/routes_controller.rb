@@ -10,7 +10,7 @@ class RoutesController < ApplicationController
       @route.schedule!(@driver, @vehicle)
       flash[:notice] = 'Ruta agendada'
     else
-      flash[:alert] = @route.overlapping_routes_message(@driver, @vehicle)
+      flash[:danger] = @route.overlapping_routes_message(@driver, @vehicle)
     end
     redirect_to root_path
   end
@@ -29,11 +29,11 @@ class RoutesController < ApplicationController
 
   def set_driver
     @driver = Driver.find_by_id(params[:driver])
-    redirect_to(root_path, flash: { error: 'Debe asignar conductor' }) if @driver.nil?
+    redirect_to(root_path, flash: { danger: 'Debe asignar conductor' }) if @driver.nil?
   end
 
   def set_vehicle
     @vehicle = Vehicle.find_by_id(params[:vehicle])
-    redirect_to(root_path, flash: { error: 'Debe asignar vehiculo' }) if @vehicle.nil?
+    redirect_to(root_path, flash: { danger: 'Debe asignar vehiculo' }) if @vehicle.nil?
   end
 end

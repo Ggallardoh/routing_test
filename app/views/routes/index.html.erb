@@ -4,7 +4,7 @@
 
   <div id ="flash">
     <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: 'alert alert-info' %>
+      <%= content_tag :div, msg, class: "alert alert-#{name}" %>
     <% end %>
   </div>
   <div class="header">
