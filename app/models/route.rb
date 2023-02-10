@@ -6,6 +6,8 @@ class Route < ApplicationRecord
   belongs_to :vehicle, optional: true
 
   validates :starts_at, :ends_at, :travel_time, :total_stops, :action, presence: true
+  validates :travel_time, :total_stops, numericality: { only_integer: true }
+  validates :action, inclusion: { in: %w[Salida Llegada] }
 
   scope :with_driver, ->(driver) { where(driver:) }
   scope :with_vehicle, ->(vehicle) { where(vehicle:) }
@@ -41,6 +43,18 @@ class Route < ApplicationRecord
     driver.nil? ? 'Sin Asignar' : "#{driver.name}/#{vehicle.plate}"
   end
 
+  def overlapping_routes_message(driver, vehicle)
+    msg = 'Vehiculo o conductor ya asignado a rutas:'
+    overlapping_routes(driver, vehicle).each { |r| msg += " #{r.name}" }
+    msg
+  end
+
+  private
+
+  def overlapping_routes?(driver, vehicle)
+    overlapping_routes(driver, vehicle).empty?
+  end
+
   def overlapping_routes(driver, vehicle)
     other_routes = []
     Route.scheduled.where.not(id:).with_driver(driver).to_a.each { |r| other_routes << r }
@@ -52,17 +66,5 @@ class Route < ApplicationRecord
       period.overlaps?(route_period)
     end
     other_routes.uniq
-  end
-
-  def overlapping_routes_message(driver, vehicle)
-    msg = 'Vehiculo o conductor ya asignado a rutas:'
-    overlapping_routes(driver, vehicle).each { |r| msg += " #{r.name}" }
-    msg
-  end
-
-  private
-
-  def overlapping_routes?(driver, vehicle)
-    overlapping_routes(driver, vehicle).empty?
   end
 end
